@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TarotAilin - Lecturas de tarot para guía y autoconocimiento">
+    <meta name="keywords"
+        content="tarot, lecturas de tarot, finanzas, autoconocimiento, espiritualidad, amor, dinero, lectura de amor, lectura de dinero, lectura de relacion, lectura de relacion pasada.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="./styles.css" type="text/css">
+    <title>TarotAilin - Lecturas de Tarot</title>
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function () {
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const priceCards = document.querySelectorAll('.price-card');
+            const modalContainer = document.getElementById('modal-container');
+            const modalContentDiv = document.getElementById('modal-content');
+            const closeModalSpan = document.querySelector('.close-modal');
+            const readingDetailsContainer = document.getElementById('reading-details-container');
+
+            // Function to set theme based on localStorage
+            function setTheme(theme) {
+                if (theme === 'dark') {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
+            }
+
+            // Get theme from localStorage or default to light
+            let currentTheme = localStorage.getItem('theme') || 'light';
+            setTheme(currentTheme);
+
+            // Theme toggle event listener
+            themeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-theme');
+                const theme = body.classList.contains('dark-theme') ? 'dark' : 'light';
+                localStorage.setItem('theme', theme);
+            });
+            // Update theme toggle icon on load and theme change
+            function updateThemeIcon() {
+                if (body.classList.contains('dark-theme')) {
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>'; // Moon icon for dark theme
+                } else {
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>'; // Sun icon for light theme
+                }
+            }
+            updateThemeIcon(); // Initial icon set
+            themeToggle.addEventListener('click', updateThemeIcon); // Update icon on toggle
+
+            priceCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const readingType = card.dataset.reading;
+                    // Prevent modal for pregunta-si-no and tres-preguntas
+                    if (readingType === 'pregunta-si-no' || readingType === 'tres-preguntas') {
+                        return; // Exit function early, no modal
+                    }
+                    const readingDetail = readingDetailsContainer.querySelector(`#${readingType}`);
+                    if (readingDetail) {
+                        modalContentDiv.innerHTML = readingDetail.innerHTML;
+                        modalContainer.style.display = "flex";
+                    }
+                });
+            });
+
+            closeModalSpan.addEventListener('click', () => {
+                modalContainer.style.display = "none";
+            });
+
+            window.addEventListener('click', (event) => {
+                if (event.target == modalContainer) {
+                    modalContainer.style.display = "none";
+                }
+            });
+
+
+        });
+
+        function openTab(tabName, element) {
+            var i, tabContent, tabButtons;
+            tabContent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabContent.length; i++) {
+                tabContent[i].style.display = "none";
+            }
+            tabButtons = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+                tabButtons[i].setAttribute("aria-selected", "false"); // Correctly update aria-selected
+            }
+            document.getElementById(tabName).style.display = "block";
+            element.classList.add("active");
+            element.setAttribute("aria-selected", "true"); // Correctly update aria-selected
+        }
+    </script>
+</head>
+
+<body>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+        <i class="fas fa-sun"></i>
+    </button>
+    <header role="banner">
+        <nav class="container" role="navigation" aria-label="Navegación principal">
+            <!-- REMOVED Hamburger Menu Toggle -->
+            <div class="nav-tabs" id="nav-tabs">
+                <!-- REMOVED Lista de Precios Tab Button -->
+            </div>
+        </nav>
+    </header>
+
+    <main class="container" role="main">
+        <section id="precios" class="tab-content active" role="tabpanel" aria-labelledby="tab-precios">
+            <div class="price-list">
+                <article class="price-card contact-card" data-reading="contacto-pago">
+                    <h3>Contacto y Pago</h3>
+                    <p>Información de contacto y métodos de pago.</p>
+                </article>
+                <article class="price-card" data-reading="llamas-gemelas">
+                    <span class="price" aria-label="Precio">$5000</span>
+                    <h3>Llamas gemelas</h3>
+                    <p>Descubre la profunda conexión espiritual con tu llama gemela.</p>
+                </article>
+                <article class="price-card" data-reading="lectura-vincular">
+                    <span class="price" aria-label="Precio">$5000</span>
+                    <h3>Lectura vincular</h3>
+                    <p>Análisis detallado de la conexión entre dos personas.</p>
+                </article>
+                <article class="price-card" data-reading="consejo-anual">
+                    <span class="price" aria-label="Precio">$5000</span>
+                    <h3>Consejo Anual</h3>
+                    <p>Guía completa con una carta por mes y consejos para todo el año.</p>
+                </article>
+                <article class="price-card" data-reading="lectura-relacion-pasada">
+                    <span class="price" aria-label="Precio">$3000</span>
+                    <h3>Lectura relación pasada</h3>
+                    <p>Comprende lo que quedó pendiente y cómo sanar tus heridas.</p>
+                </article>
+                <article class="price-card" data-reading="futuro-amor">
+                    <span class="price" aria-label="Precio">$3000</span>
+                    <h3>Futuro Amor</h3>
+                    <p>Descubre cómo será tu próxima relación amorosa.</p>
+                </article>
+                <article class="price-card" data-reading="me-manifiesta">
+                    <span class="price" aria-label="Precio">$3000</span>
+                    <h3>Me Manifiesta</h3>
+                    <p>Averigua si esa persona especial está tratando de atraerte a su vida.</p>
+                </article>
+                <article class="price-card" data-reading="lectura-del-ex">
+                    <span class="price" aria-label="Precio">$3000</span>
+                    <h3>Lectura del Ex</h3>
+                    <p>Conoce qué siente tu ex por ti y si hay posibilidad de reconciliación.</p>
+                </article>
+                <article class="price-card" data-reading="lectura-de-dinero">
+                    <span class="price" aria-label="Precio">$3000</span>
+                    <h3>Lectura de Dinero</h3>
+                    <p>Análisis sobre tu situación financiera y consejos para mejorarla.</p>
+                </article>
+                <article class="price-card" data-reading="triangulo-amoroso">
+                    <span class="price" aria-label="Precio">$2000</span>
+                    <h3>Triángulo Amoroso</h3>
+                    <p>Claridad sobre situaciones donde hay más de dos personas involucradas.</p>
+                </article>
+                <article class="price-card" data-reading="lectura-trabajo">
+                    <span class="price" aria-label="Precio">$2000</span>
+                    <h3>Lectura Trabajo</h3>
+                    <p>Orientación sobre tu situación laboral actual y futura.</p>
+                </article>
+                <article class="price-card" data-reading="voy-a-conseguir-ese-trabajo">
+                    <span class="price" aria-label="Precio">$2000</span>
+                    <h3>¿Voy a conseguir ese trabajo?</h3>
+                    <p>Respuestas sobre tus posibilidades en un puesto específico.</p>
+                </article>
+                <article class="price-card" data-reading="habla-mal-de-mi">
+                    <span class="price" aria-label="Precio">$2000</span>
+                    <h3>¿Habla mal de mí?</h3>
+                    <p>Descubre qué dice realmente esa persona sobre ti.</p>
+                </article>
+                <article class="price-card" data-reading="le-intereso">
+                    <span class="price" aria-label="Precio">$1000</span>
+                    <h3>¿Le intereso?</h3>
+                    <p>Claridad sobre si esa persona tiene interés romántico en ti.</p>
+                </article>
+                <article class="price-card" data-reading="tres-preguntas">
+                    <span class="price" aria-label="Precio">$1000</span>
+                    <h3>3 preguntas sí/no</h3>
+                    <p>Respuestas claras a tres preguntas específicas.</p>
+                </article>
+                <article class="price-card" data-reading="pregunta-si-no">
+                    <span class="price" aria-label="Precio">$500</span>
+                    <h3>Pregunta sí/no</h3>
+                    <p>Respuesta concreta a una pregunta específica.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Modal para mostrar detalles de lecturas -->
+        <div id="modal-container" class="modal-container">
+            <div class="modal-content">
+                <span class="close-modal">×</span>
+                <div id="modal-content"></div>
+            </div>
+        </div>
+
+        <!-- Contenedor oculto con los detalles de las lecturas -->
+        <div id="reading-details-container" style="display: none;">
+            <div id="contacto-pago" class="reading-detail">
+                <section class="contact-section">
+                    <h2 class="contact-heading">Contacto y Pago</h2>
+                    <div class="contact-info">
+                        <h3 class="contact-subheading">✧ Contacto ✧</h3>
+                        <p class="contact-text">
+                            <i class="contact-icon fab fa-twitter"></i>
+                            Twitter/X: <a class="contact-link" href="https://twitter.com/tarotailin"
+                                target="_blank"><img src="https://cdn.discordapp.com/attachments/1272022125707919446/1350995108383686776/82_sin_titulo_20250316215145.png?ex=67d8c3be&is=67d7723e&hm=a9e292daf2cdb861c64d7c78daf2d3cee29b8717f3c793a47a70a551ab94a0d5&" alt="Twitter Logo" style="width: 20px; vertical-align: middle; margin-right: 5px;">@tarotailin</a>
+                        </p>
+                        <p class="contact-text">
+                            <i class="contact-icon far fa-envelope"></i>
+                            Email: <a class="contact-link"
+                                href="mailto:alyssavelaryon1@gmail.com"><img src="email-logo.png" alt="Email Logo" style="width: 20px; vertical-align: middle; margin-right: 5px;">alyssavelaryon1@gmail.com</a>
+                        </p>
+                    </div>
+
+                    <div class="contact-divider">
+                        <h3 class="contact-subheading">Formas de Pago</h3>
+                        <div class="contact-info">
+                            <p class="contact-text">
+                                <i class="contact-icon flag-icon flag-icon-ar"></i>
+                                Argentina: <img src="https://cdn.discordapp.com/attachments/1272022125707919446/1350995108383686776/82_sin_titulo_20250316215145.png?ex=67d8c3be&is=67d7723e&hm=a9e292daf2cdb861c64d7c78daf2d3cee29b8717f3c793a47a70a551ab94a0d5&" alt="Mercado Pago Logo" style="width: 20px; vertical-align: middle; margin-right: 5px;"> Mercado Pago: priamano
+                            </p>
+                            <p class="contact-text">
+                                <i class="contact-icon fas fa-globe"></i>
+                                Internacional:  <img src="https://cdn.discordapp.com/attachments/1272022125707919446/1350995108383686776/82_sin_titulo_20250316215145.png?ex=67d8c3be&is=67d7723e&hm=a9e292daf2cdb861c64d7c78daf2d3cee29b8717f3c793a47a70a551ab94a0d5&" alt="PayPal Logo" style="width: 20px; vertical-align: middle; margin-right: 5px;"> PayPal: @PriscilaAmano
+                            </p>
+                            <p class="contact-text subtitle">
+                                Consultar precio en dólares
+                            </p>
+                            <p class="contact-text">
+                                Recordar que los precios estan en Pesos Argentinos.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="me-manifiesta" class="reading-detail">
+                <h3>✧ Me Manifiesta ✧</h3>
+                <ul>
+                    <li>¿Qué piensa o siente por mí?</li>
+                    <li>¿Está tratando de atraerme a su vida?</li>
+                    <li>¿Es una conexión del destino o espiritual?</li>
+                    <li>¿Qué impide o favorece que nos acerquemos?</li>
+                    <li>Consejo sobre cómo manejar la conexión</li>
+                </ul>
+            </div>
+            <div id="futuro-amor" class="reading-detail">
+                <h3>✧ Futuro Amor ✧</h3>
+                <ul>
+                    <li>¿Será atracción instantánea?</li>
+                    <li>¿Cómo será esa persona?</li>
+                    <li>Desafíos</li>
+                    <li>Elementos a favor</li>
+                    <li>¿Cuándo y cómo conoceré a esa persona?</li>
+                </ul>
+            </div>
+            <div id="lectura-vincular" class="reading-detail">
+                <h3>✧ Lectura Vincular ✧</h3>
+                <ul>
+                    <li>Consultante</li>
+                    <li>Persona 2</li>
+                    <li>Comunicación (2 cartas)</li>
+                    <li>Sentimientos (2 cartas)</li>
+                    <li>Deseo sexual (2 cartas)</li>
+                    <li>Pasado (2 cartas)</li>
+                    <li>Presente (2 cartas)</li>
+                    <li>Futuro (2 cartas)</li>
+                </ul>
+            </div>
+            <div id="lectura-relacion-pasada" class="reading-detail">
+                <h3>✧ Lectura Relación Pasada ✧</h3>
+                <ul>
+                    <li>¿Qué ha quedado?</li>
+                    <li>¿Qué puedo hacer para curar mis heridas?</li>
+                    <li>¿Qué regalos/aprendizaje me ha dejado esta relación?</li>
+                    <li>Si es el momento de cerrar este capítulo, ¿Cómo debo hacerlo?</li>
+                </ul>
+            </div>
+            <div id="lectura-del-ex" class="reading-detail">
+                <h3>✧ Lectura del Ex ✧</h3>
+                <ul>
+                    <li>¿Cómo está?</li>
+                    <li>¿Va a volver?</li>
+                    <li>¿Qué piensa de mí?</li>
+                    <li>¿Qué siente por mí?</li>
+                    <li>¿Me conviene?</li>
+                    <li>Consejo</li>
+                </ul>
+            </div>
+            <div id="llamas-gemelas" class="reading-detail">
+                <h3>✧ Llamas Gemelas ✧</h3>
+                <ul>
+                    <li>¿Cómo me ayuda a crecer?</li>
+                    <li>¿Qué busca de mí?</li>
+                    <li>¿Qué tengo que aprender?</li>
+                    <li>¿Qué aprende de mí?</li>
+                    <li>¿De quién se trata?</li>
+                    <li>¿Voy a conocerla en esta vida?</li>
+                    <li>¿Ya nos conocimos en alguna otra vida?</li>
+                    <li>¿Qué piensa de mí?</li>
+                    <li>¿Qué nos une?</li>
+                </ul>
+            </div>
+            <div id="triangulo-amoroso" class="reading-detail">
+                <h3>✧ Triángulo Amoroso ✧</h3>
+                <ul>
+                    <li>Consultante</li>
+                    <li>Persona 1</li>
+                    <li>Persona 2</li>
+                    <li>¿Por qué son amantes?</li>
+                    <li>¿Por qué tiene un amante?</li>
+                    <li>¿Qué piensa de su pareja?</li>
+                    <li>¿Qué siente por su pareja?</li>
+                    <li>¿Qué piensa de su amante?</li>
+                    <li>¿Qué siente por su amante?</li>
+                    <li>Futuro con la pareja</li>
+                    <li>Futuro con la amante</li>
+                </ul>
+            </div>
+            <div id="lectura-de-dinero" class="reading-detail">
+                <h3>✧ Lectura de Dinero ✧</h3>
+                <ul>
+                    <li>Consultante</li>
+                    <li>Objetivo que quiere lograr</li>
+                    <li>Obstáculos</li>
+                    <li>Desarrollo</li>
+                    <li>Sacrificios a realizar</li>
+                    <li>Conclusión</li>
+                    <li>Consejo</li>
+                </ul>
+            </div>
+            <div id="lectura-trabajo" class="reading-detail">
+                <h3>✧ Lectura Trabajo ✧</h3>
+                <ul>
+                    <li>Situación actual</li>
+                    <li>Obstáculos</li>
+                    <li>A qué aspiras</li>
+                    <li>Próxima etapa laboral</li>
+                    <li>Futuro probable</li>
+                    <li>Consejo</li>
+                </ul>
+            </div>
+            <div id="voy-a-conseguir-ese-trabajo" class="reading-detail">
+                <h3>✧ ¿Voy a conseguir ese trabajo? ✧</h3>
+                <ul>
+                    <li>Obstáculos</li>
+                    <li>A qué aspiras</li>
+                    <li>Próxima etapa laboral</li>
+                    <li>Futuro probable</li>
+                </ul>
+            </div>
+            <div id="habla-mal-de-mi" class="reading-detail">
+                <h3>✧ ¿Habla mal de mí? ✧</h3>
+                <ul>
+                    <li>¿Cómo me ve?</li>
+                    <li>¿Qué siente?</li>
+                    <li>¿Habla de mí con otros?</li>
+                    <li>¿Qué dice?</li>
+                </ul>
+            </div>
+            <div id="le-intereso" class="reading-detail">
+                <h3>✧ ¿Le intereso? ✧</h3>
+                <ul>
+                    <li>¿Cómo me ve?</li>
+                    <li>¿Piensa en mí?</li>
+                    <li>¿Hay posibilidades?</li>
+                    <li>¿Le intereso?</li>
+                    <li>¿Habla de mí?</li>
+                </ul>
+            </div>
+            <div id="consejo-anual" class="reading-detail">
+                <h3>✧ Consejo Anual ✧</h3>
+                <ul>
+                    <li>1 carta por mes</li>
+                    <li>Obstáculos del año (2 cartas)</li>
+                    <li>Consejo por año (3 cartas)</li>
+                </ul>
+            </div>
+             <div id="pregunta-si-no" class="reading-detail">
+                <h3>Pregunta sí/no</h3>
+                <p>Respuesta concisa para una pregunta específica.</p>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
